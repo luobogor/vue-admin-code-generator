@@ -3,19 +3,25 @@
 基于Java实体与Swagger的Vue管理端代码生成工具
  
 ## 使用
-模块请使用驼峰命名输入
 
 ````
+npm i
 cd ./code-generator
-npm install / yarn install
-node index.js 模块英文名称 模块中文名称
+npm i
+node index.js user 用户
+cd ..
+npm start
 ````
  
-例如
+ 格式
 
 ````
-node index.js user 用户
+node index.js 模块英文名 模块中文名
 ````
+
+上面生成用户模块的命令，会读取 code-generator/example/userVo.java 内容，根据相应字段生成用户列表与用户表单
+
+注意模块英文名称请使用驼峰命名输入
 
 如果重复执行代码生成，以下文件不会被重复覆盖
 
@@ -28,6 +34,7 @@ node index.js user 用户
 配置项 | 说明
 ---|---
 domainDirPath | 模块对应Java实体/Vo层对象的路径
+domainFileSuffix | 模块对应Java实体/Vo层对象后缀
 
 ### 列表页搜索栏组件
 在value说明后加上!ipt，程序会在搜索栏中生成相应字段的输入框
@@ -44,7 +51,10 @@ private String email;
 private Boolean enabled;
 ````
 
-## 变量
+## 实现细节
+利用模板替换的方式实现代码生成
+
+### 变量
 - templateName 模块名称
 
 如：user

@@ -17,7 +17,7 @@ const routes = [
     name: 'manage',
     component: Manage,
     children: [
-       // @{code-generator-anchor__router-config-path}
+      // @{code-generator-anchor__router-config-path}
     ],
   },
 ];
