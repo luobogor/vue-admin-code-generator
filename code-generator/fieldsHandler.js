@@ -41,16 +41,14 @@ function getSearchFieldsHtml(fields) {
       }, '');
   }
 
-  return `<div>
-        <ElForm :inline="true" :model="query">
+  return `<ElForm :inline="true" :model="query">
               ${getItems()}
           <ElButton
             type="primary"
             icon="el-icon-search"
             @click="getList">搜索
           </ElButton>
-        </ElForm>
-      </div>${mUtils.enter}`;
+        </ElForm>${mUtils.enter}`;
 }
 
 function getSearchOptionsObj(fields) {
