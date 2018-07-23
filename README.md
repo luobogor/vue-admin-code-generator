@@ -8,7 +8,7 @@
 npm i
 cd ./code-generator
 npm i
-node start user 用户
+npm start user 用户
 cd ..
 npm start
 ````
@@ -16,7 +16,7 @@ npm start
  格式
 
 ````
-node start 模块英文名 模块中文名
+npm start 模块英文名 模块中文名
 ````
 
 上面生成用户模块的命令，会读取 code-generator/example/userVo.java 内容，根据相应字段生成用户列表与用户表单
