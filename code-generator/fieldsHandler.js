@@ -59,7 +59,7 @@ function getSearchOptionsObj(fields) {
   function getItems() {
     return fields.filter(field => field.component === 'ops')
       .reduce((objFields, field, idx, array) => {
-        const items = `${objFields + _.camelCase(field.name)}Options:[{label: '', value: ''}]`;
+        const items = `${objFields + _.camelCase(field.name)}Options:[{label: '', value: ''}],`;
         return items + (mUtils.isLast(array, idx) ? '' : mUtils.enter);
       }, '');
   }

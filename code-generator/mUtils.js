@@ -23,7 +23,7 @@ export default {
 
   getDomainDirPath() {
     if (!config.domainDirPath.endsWith('/')) {
-      return `${this.domainDirPath}/`;
+      return `${config.domainDirPath}/`;
     }
 
     return config.domainDirPath;
