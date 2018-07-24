@@ -7,7 +7,11 @@
               background-color="#304056"
               text-color="#BFCBD9"
               active-text-color="#20a0ff">
-        <!--@{code-generator-anchor__manage-menu-item}-->
+        <ElMenuItem v-for="route in $router.options.routes[1].children"
+                    :index="route.name"
+                    :key="route.name">
+          {{ route.meta[0] }}
+        </ElMenuItem>
       </ElMenu>
     </ElAside>
 

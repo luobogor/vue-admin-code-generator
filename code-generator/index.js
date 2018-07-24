@@ -16,14 +16,6 @@ class MyFile {
   }
 }
 
-function replaceManageAnchorContent(content, moduleNameEn, moduleNameZh) {
-  const manageMenuItemAnchor = '<!--@{code-generator-anchor__manage-menu-item}-->';
-  const manageMenuItemTemplate = `<ElMenuItem index="${moduleNameEn}List">${moduleNameZh}列表</ElMenuItem>${mUtils.enter}
-                                    ${manageMenuItemAnchor}`;
-
-  return content.replace(manageMenuItemAnchor, manageMenuItemTemplate);
-}
-
 function replaceRouterAnchorContent(content, moduleNameEn, moduleNameZh) {
   const moduleNameEnUpperFirst = _.upperFirst(moduleNameEn);
 
@@ -49,31 +41,6 @@ function replaceRouterAnchorContent(content, moduleNameEn, moduleNameZh) {
 
   return content.replace(routerImportComponentAnchor, routerImportComponentTemplate)
     .replace(routerConfigPathAnchor, routerConfigPathTemplate);
-}
-
-function handleManageFile(moduleNameEn, moduleNameZh) {
-  const manageFilePath = '../src/pages/Manage.vue';
-
-  fs.readFile(path.resolve(__dirname, manageFilePath), 'utf8', (error, content) => {
-    if (error) {
-      signale.fatal(error.message);
-      return;
-    }
-    // 如果内容已经存在，说明重复执行了代码生成，直接返回
-    if (_.includes(content, `${moduleNameEn}List`)) {
-      signale.info('manageFile won\'t rewrite exist module');
-      return;
-    }
-
-    const newContent = replaceManageAnchorContent(content, moduleNameEn, moduleNameZh);
-
-    fs.writeFile(path.resolve(__dirname, manageFilePath), newContent, (writeError) => {
-      if (writeError) {
-        signale.fatal(error.message);
-      }
-      signale.success('manage write successful');
-    });
-  });
 }
 
 function handleRouterFile(moduleNameEn, moduleNameZh) {
@@ -140,6 +107,5 @@ function handleVueFile(moduleNameEn) {
 (function main() {
   handleVueFile(templateName);
   handleRouterFile(templateName, templateNameZh);
-  handleManageFile(templateName, templateNameZh);
 }());
 
