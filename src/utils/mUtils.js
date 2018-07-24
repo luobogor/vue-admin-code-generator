@@ -24,6 +24,22 @@ export const removeStore = (name) => {
   window.localStorage.removeItem(name);
 };
 
+export const setUser = user => setStore('my-ops-user', user);
+export const getUser = () => getStore('my-ops-user');
+
+export const globalEnterEvent = {
+  bind(cb) {
+    document.onkeydown = (event) => {
+      if (event.keyCode === 13) {
+        cb();
+      }
+    };
+  },
+  remove() {
+    document.onkeydown = null;
+  },
+};
+
 export const wrapper = {
   waitingWrapper: (context, prop, fn) => async (...args) => {
     if (_.isUndefined(context, prop)) {

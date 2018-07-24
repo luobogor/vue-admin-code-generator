@@ -1,38 +1,26 @@
+import { globalEnterEvent } from 'utils/mUtils';
+
 export default {
   methods: {
     submit() {
       throw new Error('GlobalEnterMixin:父组件必须重载submit方法');
     },
     isEditor(dom) {
-      if (dom.tagName.toLowerCase() === 'textarea') {
-        return true;
-      }
-      // quill editor
-      if (dom.className === 'ql-editor') {
-        return true;
-      }
-
-      return false;
-    },
-    bindEnterEvent() {
-      document.onkeydown = (event) => {
-        if (this.isEditor(event.target)) {
-          return;
-        }
-        if (event.keyCode === 13) {
-          this.submit();
-        }
-      };
-    },
-    removeBindEnterEvent() {
-      document.onkeydown = null;
+      const isQuillEditor = className => className === 'ql-editor';
+      const isTextArea = tagName => tagName.toLowerCase() === 'textarea';
+      return isTextArea(dom.tagName) || isQuillEditor(dom.className);
     },
   },
 
   created() {
-    this.bindEnterEvent();
+    globalEnterEvent.bind(() => {
+      if (this.isEditor(event.target)) {
+        return;
+      }
+      this.submit();
+    });
   },
   beforeDestroy() {
-    this.removeBindEnterEvent();
+    globalEnterEvent.remove();
   },
 };

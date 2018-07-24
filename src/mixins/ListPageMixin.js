@@ -1,4 +1,4 @@
-import { wrapper } from 'utils/mUtils';
+import { wrapper, globalEnterEvent } from 'utils/mUtils';
 
 export default {
   data: () => ({
@@ -42,8 +42,7 @@ export default {
       this.count = totalElements;
     },
     getList() {
-      const httpGet = wrapper.waitingWrapper(this, 'loading', this.api.get);
-      return httpGet(Object.assign(
+      return wrapper.waitingWrapper(this, 'loading', this.api.get)(Object.assign(
         {
           page: this.currentPage - 1,
           size: this.size,
@@ -52,27 +51,16 @@ export default {
       ));
     },
     async initData() {
-      const res = await this.getList();
-      this.setList(res.data);
-    },
-
-    removeBindEnterEvent() {
-      document.onkeydown = null;
-    },
-    bindEnterEvent() {
-      document.onkeydown = (event) => {
-        if (event.keyCode === 13) {
-          this.initData();
-        }
-      };
+      const { data } = await this.getList();
+      this.setList(data);
     },
     isBind() {
       return !_.isEmpty(this.query);
     },
     handleBindAndRemoveEnterEvent() {
       if (this.isBind()) {
-        this.bindEnterEvent();
-        this.$once('hook:beforeDestroy', () => this.removeBindEnterEvent());
+        globalEnterEvent.bind(this.initData);
+        this.$once('hook:beforeDestroy', globalEnterEvent.remove);
       }
     },
 
